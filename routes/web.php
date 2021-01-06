@@ -18,4 +18,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('persons', PersonController::class   );
+Route::resource('persons', PersonController::class, ['except' => 'show']);

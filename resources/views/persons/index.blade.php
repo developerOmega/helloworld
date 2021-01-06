@@ -4,34 +4,32 @@
 
 @section('content')
   
-  <div class="head">
-    <h2> Persons </h2>
+  <div class="header">
+    <h2 class="fs-1"> Persons </h2>
     <a href="{{ route('persons.create') }}"> New person </a>
   </div class="head">
 
-  <div class="content">
+  <div class="row row-cols-4 pt-3 gap-3">
     @forelse ($persons as $person)
-      <div class="card">
-        <div class="item">
-          <div>Name: </div>
-          <div> <a href="{{ route('persons.show', ['person' => $person]) }}"> {{ $person->name }} </a> </div>
-        </div>
 
-        <div class="item">
-          <div> Email: </div>
-          <div> {{ $person->email }} </div>
-        </div>
-
-        <div class="item">
-          <div> Tell: </div>
-          <div> {{ $person->tell }} </div>
-        </div>
-
-        <div class="item"> 
-          <div> Age: </div>
-          <div> {{$person->age}} </div>
+      <div class="card col" style="width: 18rem;">
+        <div class="card-body">
+          <h5 class="card-title"> {{ $person->name }}</h5>
+          <p class="card-text"> <b> Email: </b> {{ $person->email }}</p>
+          <p class="card-text"> <b> Tell: </b> {{ $person->tell }}</p>
+          <p class="card-text"> <b> Age: </b> {{ $person->age }}</p>
+        
+          <div class="row">
+            <a href="{{ route('persons.edit', ['person' => $person]) }}" class="btn btn-success col"> Edit </a>
+            <form action="{{url('/persons', ['person' => $person->id])}}" method="POST" class="col">
+              {!! csrf_field() !!}
+              {{ method_field('DELETE') }}
+              <button type="submit" class="btn btn-danger" > Delete </button>
+            </form>
+          </div>
         </div>
       </div>
+
     @empty
       <div> No hay usuarios </div>
     @endforelse
